@@ -65,3 +65,14 @@ app.get('/unauthorized', (req, res) => {
 
 app.listen(port)
 
+app.post('/login', urlencodedParser, (req, res) => {
+  if (matchesUsernameAndPassword(req.body)) {
+    req.session.user = req.body.username
+
+    res.redirect('/dashboard')
+  } else {
+    res.render('./login.hbs', {
+      error: 'Username and/or password is incorrect',
+    })
+  }
+})
